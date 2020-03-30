@@ -1,25 +1,29 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import BuscadorPelicula from './components/BuscadorPelicula'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import BuscadorSeries from './components/BuscadorSeries';
+import BusquedaAvanzada from './components/BusquedaAvanzada';
+import { Navbar, Nav } from 'react-bootstrap';
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Navbar className="Navbar" bg="dark" variant="dark">
+        <Nav className="mr-auto">
+          <Nav.Link href="/">Inicio</Nav.Link>
+          <Nav.Link href="/buscadorseries">Series</Nav.Link>
+          <Nav.Link href="/busquedaavanzada">Busqueda Avanzada</Nav.Link>
+        </Nav>
+      </Navbar>
+      <Switch>
+          <Route exact path="/" component={BuscadorPelicula} />
+          <Route exact path="/buscadorseries" component={BuscadorSeries} />
+          <Route exact path="/busquedaAvanzada" component={BusquedaAvanzada} />
+        </Switch>
+
+    </Router>
   );
 }
 
