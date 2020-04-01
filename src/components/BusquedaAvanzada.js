@@ -39,27 +39,29 @@ const BusquedaAvanzada = () => {
 
     const consultarBusqueda = async () => {
 
-        if ((anioInput <= 2020 || typeof anioInput === 'number') && tituloInput !== "") {
+        if (anioInput <= 2020 && typeof anioInput === 'number' && anioInput !== "" && tituloInput !== "") {
             const solicitud = await fetch(
                 `https://api.themoviedb.org/3/search/${tipoInput}?api_key=${APIKEY}&language=en-US&query=${tituloInput}&year=${anioInput}&page=${count}&include_adult=false`);
             const respuesta = await solicitud.json();
             console.log(respuesta)
-            if (respuesta.total_results === 0) {
+            if (respuesta.total_results === 0 || respuesta.results === undefined) {
                 setError(true);
                 setTimeout(() => {
                     document.querySelector('.mensaje').remove();
                 }, 2000);
             } else {
                 setResultadoBusqAvanz(respuesta.results);
-
             }
         } else {
+            setResultadoBusqAvanz([]);
             setError(true);
             setTimeout(() => {
                 document.querySelector('.mensaje').remove();
+                window.location.replace('');
             }, 2000);
         }
-    }
+    };
+
     const consultarProgramas = async () => {
         console.log(tipoInput);
         const solicitud = await fetch(`
@@ -116,6 +118,7 @@ const BusquedaAvanzada = () => {
                         <option value="Tv">tv</option>
                     </Form.Control>
                 </Form.Group>
+
                 <Form.Group as={Col} controlId="">
                     <Button variant="outline-success"
                         style={{ width: '10rem', height: '2.7rem' }}

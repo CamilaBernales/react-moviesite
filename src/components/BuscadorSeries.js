@@ -33,10 +33,12 @@ const BuscadorSeries = () => {
         // https://www.omdbapi.com/?apikey=713f58a0&s=${peliculaInput}&type=movie&page=${count}
         const respuesta = await solicitud.json();
         console.log(respuesta);
-        if (respuesta.total_results === 0) {
+        if (respuesta.total_results === 0 || respuesta.results === undefined) {
+            setSeries([]);
             setError(true);
             setTimeout(() => {
                 document.querySelector('.mensaje').remove();
+                window.location.replace('');
             }, 2000);
         } else {
             setSeries(respuesta.results);

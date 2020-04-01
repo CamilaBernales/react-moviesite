@@ -21,42 +21,48 @@ const BuscadorPeliculas = () => {
     const buscarPelicula = e => {
         e.preventDefault();
         consultarPelicula();
-        setPeliculaInput('');
+        setPeliculaInput('');   
     }
 
     const consultarPelicula = async () => {
         const solicitud = await fetch(
-            `https://api.themoviedb.org/3/search/movie?api_key=${APIKEY}&language=en-US&page=1&include_adult=false&query=${peliculaInput}&page=${count}`);
+        `https://api.themoviedb.org/3/search/movie?api_key=${APIKEY}&language=en-US&include_adult=false&query=${peliculaInput}&page=${count}`);
         const respuesta = await solicitud.json();
         console.log(respuesta)
-        if (respuesta.total_results === 0) {
+        if (respuesta.total_results === 0 || respuesta.results === undefined) {
+            setPeliculas([]);
             setError(true);
             setTimeout(() => {
                 document.querySelector('.mensaje').remove();
+                window.location.replace('');
               }, 2000);
         } else {
             setPeliculas(respuesta.results);
         }
-    }
+    };
 
     const obtenerPeliculas = async () => {
         const solicitud = await fetch(
-            `https://api.themoviedb.org/3/movie/upcoming?api_key=${APIKEY}&language=en-US&page=${count}`);
+        `https://api.themoviedb.org/3/movie/upcoming?api_key=${APIKEY}&language=en-US&page=${count}`);
         const respuesta = await solicitud.json();
         setPeliculas(respuesta.results);
     };
+
     useEffect(() => {
         obtenerPeliculas();
     }, [count]);
+    useEffect(()=>{
+        
+    },[count])
 
     return (
         <Container>
             {
                 error ?
 
-                    <Alert className="mensaje text-center" variant="danger">
+                <Alert className="mensaje text-center" variant="danger">
                         No hay resultados para su busqueda
-                     </Alert>
+                </Alert>
                     : null
             }
             <Form className=" formpadre mt-4 mb-5 pt-2 " inline onSubmit={buscarPelicula}>
@@ -80,12 +86,14 @@ const BuscadorPeliculas = () => {
             </Form>
 
             <Row>   {
+                
+
                 peliculas.map((resultado) =>
                     <Resultados
                         key={resultado.id}
                         resultado={resultado}
                     />)
-            }
+                    }
 
             </Row>
 
