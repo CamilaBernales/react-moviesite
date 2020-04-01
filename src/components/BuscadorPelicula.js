@@ -12,6 +12,7 @@ const BuscadorPeliculas = () => {
     const [count, setCount] = useState(1);
     const APIKEY = '0bac155d195be367772d6c848cfd3529';
     const [error, setError] = useState(false);
+    const [total, setTotal] = useState(false);
 
 
     const registrarCambiosBuscadorTexto = event => {
@@ -28,7 +29,7 @@ const BuscadorPeliculas = () => {
         const solicitud = await fetch(
         `https://api.themoviedb.org/3/search/movie?api_key=${APIKEY}&language=en-US&include_adult=false&query=${peliculaInput}&page=${count}`);
         const respuesta = await solicitud.json();
-        console.log(respuesta)
+        // console.log(respuesta);
         if (respuesta.total_results === 0 || respuesta.results === undefined) {
             setPeliculas([]);
             setError(true);
@@ -38,6 +39,8 @@ const BuscadorPeliculas = () => {
               }, 2000);
         } else {
             setPeliculas(respuesta.results);
+           //console.log(respuesta.total_pages)
+           setTotal(respuesta.total_pages);
         }
     };
 
@@ -46,14 +49,13 @@ const BuscadorPeliculas = () => {
         `https://api.themoviedb.org/3/movie/upcoming?api_key=${APIKEY}&language=en-US&page=${count}`);
         const respuesta = await solicitud.json();
         setPeliculas(respuesta.results);
+        setTotal(respuesta.total_pages);
     };
 
     useEffect(() => {
         obtenerPeliculas();
     }, [count]);
-    useEffect(()=>{
-        
-    },[count])
+   
 
     return (
         <Container>
@@ -100,7 +102,7 @@ const BuscadorPeliculas = () => {
             <div className="mt-5">
                 <Row>
                     <Button variant="outline-secondary" size="lg" className="ml-auto " disabled={count === 1} onClick={() => setCount(count - 1)} style={{ width: '10rem' }} >Back</Button>
-                    <Button variant="outline-secondary" size="lg" className="mr-auto " onClick={() => setCount(count + 1)} style={{ width: '10rem' }}>Next
+                    <Button variant="outline-secondary" size="lg" className="mr-auto "  disabled={count === total} onClick={() => setCount(count + 1)} style={{ width: '10rem' }}>Next
                 </Button>
                 </Row>
             </div>

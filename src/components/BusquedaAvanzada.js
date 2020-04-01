@@ -14,6 +14,7 @@ const BusquedaAvanzada = () => {
     const [resultadoBusqAvanz, setResultadoBusqAvanz] = useState([]);
     const [error, setError] = useState(false);
     const [count, setCount] = useState(1)
+    const [total, setTotal] = useState(false);
 
 
     const APIKEY = '0bac155d195be367772d6c848cfd3529';
@@ -51,6 +52,7 @@ const BusquedaAvanzada = () => {
                 }, 2000);
             } else {
                 setResultadoBusqAvanz(respuesta.results);
+                setTotal(respuesta.total_pages);
             }
         } else {
             setResultadoBusqAvanz([]);
@@ -69,6 +71,7 @@ const BusquedaAvanzada = () => {
         const respuesta = await solicitud.json();
         console.log(respuesta)
         setResultadoBusqAvanz(respuesta.results);
+        setTotal(respuesta.total_pages);
 
     };
 
@@ -140,7 +143,7 @@ const BusquedaAvanzada = () => {
             <div className="mt-5">
                 <Row>
                     <Button variant="outline-secondary" size="lg" className="ml-auto " disabled={count === 1} onClick={() => setCount(count - 1)} style={{ width: '10rem' }} >Back</Button>
-                    <Button variant="outline-secondary" size="lg" className="mr-auto " onClick={() => setCount(count + 1)} style={{ width: '10rem' }}>Next
+                    <Button variant="outline-secondary" size="lg" className="mr-auto " disabled={count === total} onClick={() => setCount(count + 1)} style={{ width: '10rem' }}>Next
                 </Button>
                 </Row>
 
