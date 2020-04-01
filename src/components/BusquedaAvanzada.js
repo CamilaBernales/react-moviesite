@@ -14,7 +14,7 @@ const BusquedaAvanzada = () => {
     const [resultadoBusqAvanz, setResultadoBusqAvanz] = useState([]);
     const [error, setError] = useState(false);
     const [count, setCount] = useState(1)
-  
+
 
     const APIKEY = '0bac155d195be367772d6c848cfd3529';
 
@@ -38,21 +38,28 @@ const BusquedaAvanzada = () => {
     };
 
     const consultarBusqueda = async () => {
-        console.log(tipoInput);
-        const solicitud = await fetch(
-            `https://api.themoviedb.org/3/search/${tipoInput}?api_key=${APIKEY}&language=en-US&query=${tituloInput}&year=${anioInput}&page=${count}&include_adult=false`);
-        const respuesta = await solicitud.json();
-        console.log(respuesta)
-        if (respuesta.total_results === 0) {
+
+        if ((anioInput <= 2020 || typeof anioInput === 'number') && tituloInput !== "") {
+            const solicitud = await fetch(
+                `https://api.themoviedb.org/3/search/${tipoInput}?api_key=${APIKEY}&language=en-US&query=${tituloInput}&year=${anioInput}&page=${count}&include_adult=false`);
+            const respuesta = await solicitud.json();
+            console.log(respuesta)
+            if (respuesta.total_results === 0) {
+                setError(true);
+                setTimeout(() => {
+                    document.querySelector('.mensaje').remove();
+                }, 2000);
+            } else {
+                setResultadoBusqAvanz(respuesta.results);
+
+            }
+        } else {
             setError(true);
             setTimeout(() => {
                 document.querySelector('.mensaje').remove();
             }, 2000);
-        }else {
-            setResultadoBusqAvanz(respuesta.results);
-           
         }
-    };
+    }
     const consultarProgramas = async () => {
         console.log(tipoInput);
         const solicitud = await fetch(`
@@ -60,7 +67,7 @@ const BusquedaAvanzada = () => {
         const respuesta = await solicitud.json();
         console.log(respuesta)
         setResultadoBusqAvanz(respuesta.results);
-       
+
     };
 
 
@@ -71,7 +78,7 @@ const BusquedaAvanzada = () => {
 
     return (
         <Container>
-             {
+            {
                 error ?
 
                     <Alert className="mensaje text-center" variant="danger">
@@ -113,7 +120,7 @@ const BusquedaAvanzada = () => {
                     <Button variant="outline-success"
                         style={{ width: '10rem', height: '2.7rem' }}
                         onClick={buscarResultados}
-                        >Search</Button>
+                    >Search</Button>
                 </Form.Group>
             </Form.Row>
             <Row>
@@ -129,12 +136,12 @@ const BusquedaAvanzada = () => {
             </Row>
             <div className="mt-5">
                 <Row>
-                    <Button variant="outline-secondary" size="lg" className="ml-auto "  disabled={count===1} onClick={() => setCount(count - 1)} style={{ width: '10rem' }} >Back</Button>
+                    <Button variant="outline-secondary" size="lg" className="ml-auto " disabled={count === 1} onClick={() => setCount(count - 1)} style={{ width: '10rem' }} >Back</Button>
                     <Button variant="outline-secondary" size="lg" className="mr-auto " onClick={() => setCount(count + 1)} style={{ width: '10rem' }}>Next
                 </Button>
                 </Row>
 
-            </div> 
+            </div>
 
         </Container>
     );
