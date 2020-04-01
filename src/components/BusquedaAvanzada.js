@@ -38,7 +38,7 @@ const BusquedaAvanzada = () => {
 
     const obtenerBusqueda = async () => {
 
-        if ((anioInput < 2020 || typeof anioInput === 'number' ) && anioInput !== "" && tituloInput !== "") {
+        if ((anioInput <= 2020 || typeof anioInput === 'number' ) && anioInput !== "" && tituloInput !== "") {
             const solicitud = await fetch(
                 `https://api.themoviedb.org/3/search/${tipoInput}?api_key=${APIKEY}&language=en-US&query=${tituloInput}&year=${anioInput}&page=${count}&include_adult=false`);
             const respuesta = await solicitud.json();
