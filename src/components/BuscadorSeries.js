@@ -23,7 +23,6 @@ const BuscadorSeries = () => {
     const buscarSerie = event => {
         event.preventDefault();
         consultarSerie();
-        setSerieInput('');
     };
 
 
@@ -57,10 +56,12 @@ const BuscadorSeries = () => {
         setTotal(respuesta.total_pages);
     };
 
-
-
     useEffect(() => {
-        obtenerSeries();
+        if (serieInput !== "") {
+            consultarSerie();
+        } else {
+            obtenerSeries();
+        }
     }, [count])
 
     return (
@@ -110,12 +111,12 @@ const BuscadorSeries = () => {
                         onClick={() => setCount(count - 1)}
                         style={{ width: '10rem' }} >
                         Back</Button>
-                    <Button 
-                    variant="outline-secondary" 
-                    size="lg" 
-                    className="mr-auto " 
-                    disabled={count === total}
-                    onClick={() => setCount(count + 1)} style={{ width: '10rem' }}>Next
+                    <Button
+                        variant="outline-secondary"
+                        size="lg"
+                        className="mr-auto "
+                        disabled={count === total}
+                        onClick={() => setCount(count + 1)} style={{ width: '10rem' }}>Next
                 </Button>
                 </Row>
             </div>

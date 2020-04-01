@@ -33,14 +33,12 @@ const BusquedaAvanzada = () => {
     }
     const buscarResultados = e => {
         e.preventDefault();
-        consultarBusqueda();
-        setTituloInput('');
-        setAnioInput('');
+        obtenerBusqueda();
     };
 
-    const consultarBusqueda = async () => {
+    const obtenerBusqueda = async () => {
 
-        if (anioInput <= 2020 && typeof anioInput === 'number' && anioInput !== "" && tituloInput !== "") {
+        if ((anioInput < 2020 || typeof anioInput === 'number' ) && anioInput !== "" && tituloInput !== "") {
             const solicitud = await fetch(
                 `https://api.themoviedb.org/3/search/${tipoInput}?api_key=${APIKEY}&language=en-US&query=${tituloInput}&year=${anioInput}&page=${count}&include_adult=false`);
             const respuesta = await solicitud.json();
@@ -48,7 +46,9 @@ const BusquedaAvanzada = () => {
             if (respuesta.total_results === 0 || respuesta.results === undefined) {
                 setError(true);
                 setTimeout(() => {
+                    setResultadoBusqAvanz([]);
                     document.querySelector('.mensaje').remove();
+                    window.location.replace('');
                 }, 2000);
             } else {
                 setResultadoBusqAvanz(respuesta.results);
@@ -77,7 +77,11 @@ const BusquedaAvanzada = () => {
 
 
     useEffect(() => {
-        consultarProgramas();
+        if (anioInput !== "" && tituloInput !== "") {
+            obtenerBusqueda();
+        } else {
+            consultarProgramas();
+        }
     }, [count])
 
 

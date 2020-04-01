@@ -22,7 +22,7 @@ const BuscadorPeliculas = () => {
     const buscarPelicula = e => {
         e.preventDefault();
         consultarPelicula();
-        setPeliculaInput('');   
+    //    setPeliculaInput('');    
     }
 
     const consultarPelicula = async () => {
@@ -53,7 +53,11 @@ const BuscadorPeliculas = () => {
     };
 
     useEffect(() => {
-        obtenerPeliculas();
+        if(peliculaInput !== ""){
+            consultarPelicula();
+        }else{
+            obtenerPeliculas();
+        }
     }, [count]);
    
 

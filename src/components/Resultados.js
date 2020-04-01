@@ -15,7 +15,6 @@ const Resultados = (resultado) => {
                 <Card.Body>
                     <Card.Title>{title}{name}</Card.Title>
                     <Card.Text>
-                        
                         Popularidad: {popularity}
                         <br/>
                         {first_air_date}
