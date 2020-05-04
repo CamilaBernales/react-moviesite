@@ -51,7 +51,7 @@ const BuscadorSeries = () => {
         const solicitud = await fetch(`
         https://api.themoviedb.org/3/tv/top_rated?api_key=${APItmdb}&language=en-US&page=${count}`);
         const respuesta = await solicitud.json();
-        console.log(respuesta);
+        // console.log(respuesta);
         setSeries(respuesta.results);
         setTotal(respuesta.total_pages);
     };
@@ -62,6 +62,7 @@ const BuscadorSeries = () => {
         } else {
             obtenerSeries();
         }
+        // eslint-disable-next-line
     }, [count])
 
     return (

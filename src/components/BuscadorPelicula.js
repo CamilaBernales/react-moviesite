@@ -58,6 +58,7 @@ const BuscadorPeliculas = () => {
         }else{
             obtenerPeliculas();
         }
+        // eslint-disable-next-line
     }, [count]);
    
 

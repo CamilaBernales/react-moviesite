@@ -82,6 +82,7 @@ const BusquedaAvanzada = () => {
         } else {
             consultarProgramas();
         }
+        // eslint-disable-next-line
     }, [count])
 
 

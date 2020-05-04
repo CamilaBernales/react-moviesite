@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useParams } from "react-router";
-import { Container, Card, Button } from 'react-bootstrap';
+import { Container, Card} from 'react-bootstrap';
 
 
 const Details = () => {
@@ -26,6 +26,7 @@ const Details = () => {
 
     useEffect(() => {
         encontrarID();
+        // eslint-disable-next-line
     }, [id, titulo]);
 
     const { original_title, overview, name, poster_path, tagline } = details;
