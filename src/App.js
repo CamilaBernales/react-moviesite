@@ -13,7 +13,7 @@ function App() {
   return (
     <Router>
       <Navbar className="Navbar" bg="dark" variant="dark">
-      <Navbar.Brand className="logo">Kuevana 8</Navbar.Brand>
+      <Navbar.Brand className="logo">Kuevana</Navbar.Brand>
         <Nav className="mr-auto">
           <Nav.Link href="/">Inicio</Nav.Link>
           <Nav.Link href="/buscadorseries">Series</Nav.Link>
