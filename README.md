@@ -1,4 +1,4 @@
-Beverage Finder
+Movies fider
 
 DEMO : https://reactmoviesntvshows.netlify.app/
 
