@@ -9,7 +9,9 @@ Starting 🚀
 In your terminal
 
 git-clone https://github.com/CamilaBernales/react-moviesite.git
+
 npm install 
+
 npm start
 
 Ready!
